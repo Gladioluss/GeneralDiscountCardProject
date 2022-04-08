@@ -1,0 +1,39 @@
+#:include templates/login_screen.kv
+#:include templates/registration_screen.kv
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+ScreenManager:
+    transition: NoTransition()
+
+    Screen:
+        name: "authorization_or_registration_screen"
+
+        MDCard:
+            size_hint: None, None
+            size: 300, 500
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
+
+            MDRoundFlatButton:
+                text: "Авторизация"
+                pos_hint: {"center_x": 0.5}
+                font_size: 30
+                font_name: 'productsans.ttf'
+                on_press: app.root.current = 'login_screen'
+
+            MDRoundFlatButton:
+                text: "Регистрация"
+                pos_hint: {"center_x": 0.5}
+                font_size: 30
+                font_name: 'productsans.ttf'
+                on_press: app.root.current = 'registration_screen'
+
+            Widget:
+                size_hint_y: None
+                height: 150
+
+    Login:
+
+    Registration:
