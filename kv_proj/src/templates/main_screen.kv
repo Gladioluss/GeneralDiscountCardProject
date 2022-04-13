@@ -1,0 +1,32 @@
+<Main@Screen>:
+    name: 'main_screen'
+
+    MDCard:
+        size_hint: None, None
+        size: 300, 500
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+        MDLabel:
+            id: main_label
+            text: "Регистрация"
+            font_size: 40
+            font_name: 'productsans.ttf'
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1]
+            padding_y: 15
+
+        MDRoundFlatButton:
+            text: "Назад"
+            font_size: 12
+            font_name: 'productsans.ttf'
+            pos_hint: {"center_x": 0.5}
+            on_press: app.change_screen('registration_screen')
+
+        Widget:
+            size_hint_y: None
+            height: 80
