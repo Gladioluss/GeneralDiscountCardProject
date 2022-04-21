@@ -1,0 +1,15 @@
+#  import the python files defining the Screens
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+#  include the kv files for the other Screens
+#: include templates_new/authorization_or_registration_screen.kv
+#: include templates_new/login_screen.kv
+#: include templates_new/registration_screen.kv
+#: include templates_new/home_screen.kv
+
+WindowManager:
+    transition: NoTransition()
+    Authorization_or_registration_screen:
+    Login_screen:
+    Registration_screen:
+    Home_screen:

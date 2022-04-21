@@ -1,5 +1,7 @@
-<Login@Screen>:
-    name: 'login_screen'
+#:include templates/main_screen.kv
+
+<Registration_screen>:
+    name: 'registration_screen'
 
     MDCard:
         size_hint: None, None
@@ -11,8 +13,8 @@
         orientation: 'vertical'
 
         MDLabel:
-            id: login_label
-            text: "Войти"
+            id: welcome_label
+            text: "Регистрация"
             font_size: 40
             font_name: 'productsans.ttf'
             halign: 'center'
@@ -30,6 +32,7 @@
             font_name: 'productsans.ttf'
             pos_hint: {'center_x': 0.5}
 
+
         MDTextField:
             id: password
             hint_text: 'password'
@@ -42,11 +45,12 @@
             password: True
 
         MDRoundFlatButton:
-            text: "Войти"
+            id: register
+            text: "Зарегистрироваться"
             font_size: 12
             font_name: 'productsans.ttf'
             pos_hint: {"center_x": 0.5}
-            on_press: app.login_account(username.text, password.text)
+            on_press: app.register_account(username.text, password.text)
 
         MDRoundFlatButton:
             text: "Назад"

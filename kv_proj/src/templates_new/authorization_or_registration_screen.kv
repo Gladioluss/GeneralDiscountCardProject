@@ -1,0 +1,32 @@
+
+
+<Authorization_or_registration_screen>:
+    name: "authorization_or_registration_screen"
+
+    MDCard:
+        size_hint: None, None
+        size: 300, 500
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+        MDRoundFlatButton:
+            id: button_authorization
+            text: "Авторизация"
+            pos_hint: {"center_x": 0.5}
+            font_size: 30
+            font_name: 'productsans.ttf'
+            on_press: app.change_screen('login_screen')
+
+        MDRoundFlatButton:
+            text: "Регистрация"
+            pos_hint: {"center_x": 0.5}
+            font_size: 30
+            font_name: 'productsans.ttf'
+            on_press: app.change_screen('registration_screen')
+
+        Widget:
+            size_hint_y: None
+            height: 150

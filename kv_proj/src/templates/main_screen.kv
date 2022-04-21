@@ -1,32 +1,193 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
 <Main@Screen>:
     name: 'main_screen'
 
-    MDCard:
-        size_hint: None, None
-        size: 300, 500
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        elevation: 10
-        padding: 25
-        spacing: 25
-        orientation: 'vertical'
+    MDNavigationLayout:
 
-        MDLabel:
-            id: main_label
-            text: "Регистрация"
-            font_size: 40
-            font_name: 'productsans.ttf'
-            halign: 'center'
-            size_hint_y: None
-            height: self.texture_size[1]
-            padding_y: 15
+        ScreenManager:
+            transition: NoTransition()
+            id: MainScreen
+            MDScreen:
 
-        MDRoundFlatButton:
-            text: "Назад"
-            font_size: 12
-            font_name: 'productsans.ttf'
-            pos_hint: {"center_x": 0.5}
-            on_press: app.change_screen('registration_screen')
+                MDBoxLayout:
+                    orientation: 'vertical'
 
-        Widget:
-            size_hint_y: None
-            height: 80
+                    MDToolbar:
+                        id: toolbar
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+
+                    MDSwiper:
+                        size_hint_y: None
+#                        do_scroll: True
+#                        width_mult: 1
+#                        orientation: 'vertical'
+#                        y: root.height - self.height - toolbar.height
+#                        x: dp(100)
+#                        height: root.height - toolbar.height - bottomNavigationItem.height - dp(50)
+#                        width: root.width
+
+                        MDSwiperItem:
+
+                            FitImage:
+                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+                                radius: [20,]
+
+                        MDSwiperItem:
+                            FitImage:
+                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+                                radius: [20,]
+
+                        MDSwiperItem:
+                            FitImage:
+                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+                                radius: [20,]
+
+                        MDSwiperItem:
+                            FitImage:
+                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+                                radius: [20,]
+
+                        MDSwiperItem:
+                            FitImage:
+                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+                                radius: [20,]
+
+                    MDBottomNavigation:
+                        #color stuff
+                        #panel_color: 0,0,1,1
+
+                        MDBottomNavigationItem:
+                            id: bottomNavigationItem
+                            name: 'screen 1'
+                            text: "Кошелёк"
+                            icon: 'language-python'
+
+                #            MDLabel:
+                #                text: "Python"
+                #                halign: 'center'
+
+                        MDBottomNavigationItem:
+                            name: 'screen 2'
+                            text: "Добавить"
+                            icon: 'plus-circle-outline'
+
+                            MDLabel:
+                                text: "ADD"
+                                halign: 'center'
+
+                        MDBottomNavigationItem:
+                            name: 'screen 3'
+                            text: "Меню"
+                            icon: 'instagram'
+
+                #            MDLabel:
+                #                text: "My Instagram:\nrealjohnelder"
+                #                halign: 'center'
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer
+
+
+
+
+
+##:import NoTransition kivy.uix.screenmanager.NoTransition
+#
+#<Main@Screen>:
+#    name: 'main_screen'
+#
+#    MDNavigationLayout:
+#
+#        ScreenManager:
+#            transition: NoTransition()
+#
+#            MDScreen:
+#
+#                MDBoxLayout:
+#                    orientation: 'vertical'
+#
+#                    MDToolbar:
+#                        id: toolbar
+#                        elevation: 10
+#                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+#
+#                    MDSwiper:
+#                        size_hint_y: None
+##                        do_scroll: True
+##                        width_mult: 1
+##                        orientation: 'vertical'
+##                        y: root.height - self.height - toolbar.height
+##                        x: dp(100)
+##                        height: root.height - toolbar.height - bottomNavigationItem.height - dp(50)
+##                        width: root.width
+#
+#                        MDSwiperItem:
+#
+#                            FitImage:
+#                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+#                                radius: [20,]
+#
+#                        MDSwiperItem:
+#                            FitImage:
+#                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+#                                radius: [20,]
+#
+#                        MDSwiperItem:
+#                            FitImage:
+#                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+#                                radius: [20,]
+#
+#                        MDSwiperItem:
+#                            FitImage:
+#                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+#                                radius: [20,]
+#
+#                        MDSwiperItem:
+#                            FitImage:
+#                                source: "C:\\Users\\Danil\\Desktop\\12.jpg"
+#                                radius: [20,]
+#
+#                    MDBottomNavigation:
+#                        #color stuff
+#                        #panel_color: 0,0,1,1
+#
+#                        MDBottomNavigationItem:
+#                            id: bottomNavigationItem
+#                            name: 'screen 1'
+#                            text: "Кошелёк"
+#                            icon: 'language-python'
+#
+#                #            MDLabel:
+#                #                text: "Python"
+#                #                halign: 'center'
+#
+#                        MDBottomNavigationItem:
+#                            name: 'screen 2'
+#                            text: "Добавить"
+#                            icon: 'plus-circle-outline'
+#
+#                            MDLabel:
+#                                text: "ADD"
+#                                halign: 'center'
+#
+#                        MDBottomNavigationItem:
+#                            name: 'screen 3'
+#                            text: "Меню"
+#                            icon: 'instagram'
+#
+#                #            MDLabel:
+#                #                text: "My Instagram:\nrealjohnelder"
+#                #                halign: 'center'
+#
+#
+#        MDNavigationDrawer:
+#            id: nav_drawer
+#
+#            ContentNavigationDrawer:
+#                id: content_drawer
