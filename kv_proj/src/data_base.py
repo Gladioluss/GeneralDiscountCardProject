@@ -3,7 +3,8 @@ from firebase_admin import credentials
 from firebase_admin import db
 from firebase_admin import firestore
 from kv_proj.src.user import User
-import hashlib
+
+import kv_proj.src.hash_password
 
 URL_DATABASE = 'https://alphabankproject-default-rtdb.asia-southeast1.firebasedatabase.app/.json'
 PATH_TO_KEY = 'serviceAccountKey.json'
@@ -31,49 +32,36 @@ class Database(metaclass=MetaSingleton):
             self.connection = 1
             return Database
 
-    def add_new_user(self, login, password):
+    def add_new_user(self, login, password) -> None:
         user = User(login, password)
         ref = db.reference('/')
-        users_ref = ref.child('users')
-        hash = hashlib.sha256()
-        users_ref.update({
+        ref.child('users').update({
                 f'user_{user.login}': {
                     'login': user.login,
                     'password': user.password,
+                    'card_list': {
+                        '0': '-1'
+                    }
                     }
                 })
 
-    def check_user_exists(self, login):
+    def check_user_exists(self, login) -> object:
         ref = db.reference('/')
         res = ref.child('users').child(f'user_{login}').get()
         return res
 
+    def add_new_card(self, login, card_name) -> None:
+        ref = db.reference('/')
+        card_list = ref.child('users').child(f'user_{login}').child('card_list').get()
+        new_card_number = len(card_list)
+        if new_card_number == 1:
+            ref.child('users').child(f'user_{login}').child('card_list').child('0').delete()
+        ref.child('users').child(f'user_{login}').child('card_list').update({card_name: card_name})
 
-# realtime database
-"""
-cred = credentials.Certificate(PATH_TO_KEY)
-firebase_admin.initialize_app(cred, {
-        'databaseURL': URL_DATABASE
-    })
+    def delete_card(self, login, card_number) -> None:
+        ref = db.reference('/')
+        ref.child('users').child(f'user_{login}').child('card_list').child(card_number).delete()
 
-    ref = db.reference('/')
-    ref.set({
-        'Employee':
-            {
-                'emp1': {
-                    'name': 'Danil',
-                    'lname': 'Emurashin',
-                    'age': 24
-                }
-            }
-    })
-"""
 
-# firestore database
-"""
-def main():
-    cred = credentials.Certificate(PATH_TO_KEY)
-    firebase_admin.initialize_app(cred)
-    db = firestore.client()
-    db.collection('people').add({'name': 'Danil', 'lname': 'Emurashin', 'age': 24})
-"""
+
+

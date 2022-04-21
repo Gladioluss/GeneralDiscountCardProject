@@ -1,5 +1,3 @@
-import os.path
-
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
@@ -22,35 +20,23 @@ from plyer import gps
 
 from kv_proj.src.data_base import Database
 
-from os.path import join
+# Нужен для работы kv файлов
+import kv_proj.src.kv_classes
+
+import hash_password
+# from kv_proj.src.hash_password import hash_password, check_password
+
 
 Config.set('graphics', 'position', 'custom')
 Window.size = (300, 500)
 
 
 class AlphaBankProject(MDApp):
-    class ContentNavigationDrawer(BoxLayout):
-        pass
-
-    class WindowManager(ScreenManager):
-        pass
-
-    class Authorization_or_registration_screen(Screen):
-        pass
-
-    class Registration_screen(Screen):
-        pass
-
-    class Home_screen(Screen):
-        pass
-
-    class StartScreen(BoxLayout):
-        pass
-
-    class Login_screen(Screen):
-        pass
 
     db: Database = None
+
+    def build_config(self, config):
+        config.setdefaults('login', {'username': '', 'password': ''})
 
     def build(self):
 
@@ -58,50 +44,46 @@ class AlphaBankProject(MDApp):
         self.theme_cls.theme_style = 'Dark'
         self.theme_cls.primary_palette = 'BlueGray'
         self.db = Database().connect()
-        if self.check_config():
+        if self._check_config():
             login = self.config.get('login', 'username')
             password = self.config.get('login', 'password')
             res = Database().check_user_exists(login=login)
             if res is not None and password == res['password']:
-                print("MAIN")
                 return Builder.load_file('templates_new/main_without_config.kv')
         else:
-            print("GUI")
             self.config.setdefaults('login', {'username': '', 'password': ''})
             return Builder.load_file('templates_new/main_with_config.kv')
 
-    def check_config(self):
+    def _check_config(self) -> bool:
         if self.config.get('login', 'username') != ''\
                 and self.config.get('login', 'password') != '':
             return True
         return False
 
-    def build_config(self, config):
-        config.setdefaults('login', {'username': '', 'password': ''})
-
     def change_screen(self, filename):
         self.root.current = filename
 
-    def register_account(self, login, password):
+    def register_account(self, login, password) -> None:
         if len(login) > 4 and len(password) > 4:
-            # Database().add_new_user(login=login, password=password)
-            # self.config.add_section('default_section')
+            new_password = hash_password.hash_password(password)
+            Database().add_new_user(login=login, password=new_password)
             self.config.set('login', 'username', login)
-            self.config.set('login', 'password', password)
+            self.config.set('login', 'password', new_password)
             self.config.write()
             username = self.config.get('login', 'username')
             print(username)
-            # self.change_screen('main_screen')
             self.change_screen('home_screen')
         else:
             dialog = MDDialog(text='Длина логина должна быть больше 4')
             dialog.open()
 
-    def login_account(self, login, password):
+    def login_account(self, login, password) -> None:
         res = Database().check_user_exists(login=login)
 
-        if res is not None and password == res['password']:
-            # self.change_screen('main_screen')
+        if res is not None and hash_password.check_password(res['password'], password):
+            self.config.set('login', 'username', login)
+            self.config.set('login', 'password', res['password'])
+            self.config.write()
             self.change_screen('home_screen')
         else:
             dialog = MDDialog(text='Неверный логин или пароль')
