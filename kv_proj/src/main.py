@@ -20,6 +20,8 @@ from plyer import gps
 
 from kv_proj.src.data_base import Database
 
+from numba import njit, prange
+
 # Нужен для работы kv файлов
 import kv_proj.src.kv_classes
 
