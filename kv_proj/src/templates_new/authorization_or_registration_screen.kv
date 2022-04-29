@@ -2,7 +2,6 @@
 
 <Authorization_or_registration_screen>:
     name: "authorization_or_registration_screen"
-
     MDCard:
         size_hint: None, None
         size: 300, 500
@@ -12,19 +11,28 @@
         spacing: 25
         orientation: 'vertical'
 
-        MDRoundFlatButton:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'kv_proj/src/resources/background.png'
+
+
+        MDFillRoundFlatButton:
             id: button_authorization
-            text: "Авторизация"
+            text: "[color=#000000]Авторизация[/color]"
             pos_hint: {"center_x": 0.5}
             font_size: 30
             font_name: 'productsans.ttf'
+            md_bg_color: 241/255, 204/255, 93/255, 255/255
             on_press: app.change_screen('login_screen')
 
-        MDRoundFlatButton:
-            text: "Регистрация"
+        MDFillRoundFlatButton:
+            text: "[color=#000000]Регистрация[/color]"
             pos_hint: {"center_x": 0.5}
             font_size: 30
             font_name: 'productsans.ttf'
+            md_bg_color: 241/255, 204/255, 93/255, 255/255
             on_press: app.change_screen('registration_screen')
 
         Widget:

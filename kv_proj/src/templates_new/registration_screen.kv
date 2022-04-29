@@ -3,6 +3,7 @@
 <Registration_screen>:
     name: 'registration_screen'
 
+
     MDCard:
         size_hint: None, None
         size: 300, 500
@@ -12,9 +13,17 @@
         spacing: 25
         orientation: 'vertical'
 
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'kv_proj/src/resources/background.png'
+
+
         MDLabel:
             id: welcome_label
-            text: "Регистрация"
+            text: ""
             font_size: 40
             font_name: 'productsans.ttf'
             halign: 'center'
@@ -24,18 +33,23 @@
 
         MDTextField:
             id: username
-            hint_text: 'username'
+            mode: "line"
+            line_color_normal: 230/255, 217/255, 207/255, 0.7
+            max_text_length: 15
+            hint_text: "Логин"
             icon_right: 'account'
             size_hint_x: None
             width: 200
             font_size: 18
             font_name: 'productsans.ttf'
             pos_hint: {'center_x': 0.5}
-
+            md_bg_color: 241/255, 204/255, 93/255, 255/255
 
         MDTextField:
             id: password
-            hint_text: 'password'
+            mode: "line"
+            line_color_normal: 230/255, 217/255, 207/255, 0.7
+            hint_text: 'Password'
             icon_right: 'eye-off'
             size_hint_x: None
             width: 200
@@ -44,19 +58,21 @@
             pos_hint: {'center_x': 0.5}
             password: True
 
-        MDRoundFlatButton:
+        MDFillRoundFlatButton:
             id: register
-            text: "Зарегистрироваться"
-            font_size: 12
+            text: "[color=#000000]Зарегистрироваться[/color]"
+            font_size: 18
             font_name: 'productsans.ttf'
             pos_hint: {"center_x": 0.5}
+            md_bg_color: 241/255, 204/255, 93/255, 255/255
             on_press: app.register_account(username.text, password.text)
 
-        MDRoundFlatButton:
-            text: "Назад"
-            font_size: 12
+        MDFillRoundFlatButton:
+            text: "[color=#000000]Назад[/color]"
+            font_size: 18
             font_name: 'productsans.ttf'
             pos_hint: {"center_x": 0.5}
+            md_bg_color: 241/255, 204/255, 93/255, 255/255
             on_press: app.change_screen('authorization_or_registration_screen')
 
         Widget:

@@ -1,6 +1,9 @@
+from typing import Any
+
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
+from kivy.properties import ObjectProperty
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -8,6 +11,7 @@ from kivy.animation import Animation
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivymd.app import MDApp
+from kivy.metrics import dp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -20,10 +24,9 @@ from plyer import gps
 
 from kv_proj.src.data_base import Database
 
-from numba import njit, prange
-
 # Нужен для работы kv файлов
 import kv_proj.src.kv_classes
+
 
 import hash_password
 # from kv_proj.src.hash_password import hash_password, check_password
@@ -34,6 +37,7 @@ Window.size = (300, 500)
 
 
 class AlphaBankProject(MDApp):
+    box = ObjectProperty(None)
 
     db: Database = None
 
@@ -56,13 +60,14 @@ class AlphaBankProject(MDApp):
             self.config.setdefaults('login', {'username': '', 'password': ''})
             return Builder.load_file('templates_new/main_with_config.kv')
 
+
     def _check_config(self) -> bool:
         if self.config.get('login', 'username') != ''\
                 and self.config.get('login', 'password') != '':
             return True
         return False
 
-    def change_screen(self, filename):
+    def change_screen(self, filename) -> None:
         self.root.current = filename
 
     def register_account(self, login, password) -> None:
@@ -90,6 +95,15 @@ class AlphaBankProject(MDApp):
         else:
             dialog = MDDialog(text='Неверный логин или пароль')
             dialog.open()
+
+    def get_width(self) -> Any:
+        return Window.size[0]
+
+    def get_height(self) -> Any:
+        return Window.size[1]
+
+    def clear(self) -> None:
+            self.box.add_widget(kv_proj.src.kv_classes.ImageButton(Image='C:\\Users\\Danil\\Desktop\\12.jpg'), index=2)
 
     # def on_gps_location(**kwargs):
     #     print('lat: {lat}, lon: {lon}'.format(**kwargs))
